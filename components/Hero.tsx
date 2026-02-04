@@ -1,23 +1,14 @@
 
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 
 export const Hero: React.FC = () => {
   const [isFlashing, setIsFlashing] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    // Preload audio for zero-latency playback when the component mounts
-    audioRef.current = new Audio("https://www.myinstants.com/media/sounds/camera-shutter-181.mp3");
-    audioRef.current.load();
-  }, []);
 
   const handleCapture = useCallback(() => {
-    if (audioRef.current) {
-      // Reset sound to start to allow rapid clicking (shutter burst feel)
-      audioRef.current.currentTime = 0;
-      audioRef.current.volume = 0.6;
-      audioRef.current.play().catch(e => console.log("Audio playback blocked or failed.", e));
-    }
+    // Play shutter sound
+    const audio = new Audio("https://www.myinstants.com/instant/camera-shutter-181/embed/");
+    audio.volume = 0.5;
+    audio.play().catch(e => console.log("Audio playback blocked until user interaction."));
 
     // Trigger flash effect
     setIsFlashing(true);
@@ -90,7 +81,7 @@ export const Hero: React.FC = () => {
 
         <div className="space-y-8">
             <h1 className="text-4xl md:text-7xl font-bold tracking-tighter leading-[1.1] text-black">
-              기술로 세상을 보고<br />
+              기술로 세상을 보고,<br />
               <span className="text-lgRed italic">관심으로 사람을 봅니다.</span>
             </h1>
             
@@ -99,7 +90,7 @@ export const Hero: React.FC = () => {
                 AI Education Creator, <span className="text-black font-extrabold border-b-4 border-lgRed pb-1">손주희</span>
               </p>
               <p className="text-lg md:text-xl text-lgGray max-w-2xl mx-auto leading-relaxed">
-                LG 디스커버리랩의 교육 철학을 가슴에 품고<br />
+                LG 디스커버리랩의 교육 철학을 가슴에 품고,<br />
                 아이들의 잠재력을 깨우는 <span className="text-black font-bold">크루</span>가 되겠습니다.
               </p>
             </div>

@@ -1,68 +1,10 @@
 
-import React, { useEffect } from 'react';
-
-// TypeScript에서 window.confetti를 인식할 수 있도록 타입 선언
-declare global {
-  interface Window {
-    confetti: any;
-  }
-}
+import React from 'react';
 
 export const VisionSection: React.FC = () => {
-  useEffect(() => {
-    // 컴포넌트 마운트 시 confetti 라이브러리 CDN 로드
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      // 컴포넌트 언마운트 시 스크립트 제거
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
-  }, []);
-
-  const handleContactClick = () => {
-    // 라이브러리가 로드되었는지 확인
-    if (typeof window.confetti !== 'function') {
-      console.warn("Confetti library is not loaded yet.");
-      return;
-    }
-
-    // 풍선이 둥둥 떠오르는 느낌의 컨페티 설정 (3초간 지속)
-    const end = Date.now() + 3 * 1000;
-    const colors = ['#A50034', '#ffffff', '#FFC1CC', '#8B002B'];
-
-    const frame = () => {
-      window.confetti({
-        particleCount: 2,
-        angle: 90,
-        spread: 80,
-        origin: { x: 0.5, y: 1.1 }, // 화면 아래(1.0보다 큰 값)에서 시작
-        colors: colors,
-        shapes: ['circle'],
-        gravity: 0.4, // 중력을 낮춰서 천천히 올라가는/떠다니는 느낌
-        drift: 0.2, // 약간의 횡풍 효과
-        ticks: 300,
-        startVelocity: 45,
-        scalar: 1.2 // 입자 크기 확대
-      });
-
-      if (Date.now() < end) {
-        requestAnimationFrame(frame);
-      }
-    };
-
-    frame();
-    
-    console.log("Thank you for your interest! We'll be in touch.");
-  };
-
   return (
-    <section id="vision" className="py-24 md:py-40 px-6 bg-white flex flex-col items-center justify-center text-center relative overflow-hidden">
-      <div className="max-w-3xl mx-auto space-y-12 relative z-10">
+    <section id="vision" className="py-24 md:py-40 px-6 bg-white flex flex-col items-center justify-center text-center relative">
+      <div className="max-w-3xl mx-auto space-y-12">
         {/* Quotation Icon */}
         <div className="mb-8">
             <svg className="w-16 h-16 text-lgRed/10 mx-auto" fill="currentColor" viewBox="0 0 24 24">
@@ -83,10 +25,7 @@ export const VisionSection: React.FC = () => {
         </p>
 
         <div className="pt-8">
-            <button 
-              onClick={handleContactClick}
-              className="bg-lgRed text-white px-10 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-2xl hover:bg-[#8B002B] transition-all duration-300 transform hover:-translate-y-1 active:scale-95"
-            >
+            <button className="bg-lgRed text-white px-10 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-2xl hover:bg-[#8B002B] transition-all duration-300 transform hover:-translate-y-1">
                 Contact Me
             </button>
         </div>
